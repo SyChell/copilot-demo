@@ -98,6 +98,38 @@ class TestLockerCode(unittest.TestCase):
         code = generate_locker_code()
         for c in code:
             self.assertTrue(c in string.digits or c in ['*', '#'])
+class TestLockerMatrix(unittest.TestCase):
+    def test_generate_locker_matrix_size(self):
+        n, m = 5, 5
+        matrix = generate_locker_matrix(n, m)
+        self.assertEqual(len(matrix), n)
+        self.assertEqual(len(matrix[0]), m)
+
+    def test_generate_locker_matrix_content(self):
+        n, m = 5, 5
+        matrix = generate_locker_matrix(n, m)
+        total_tumblers = total_small_shirts = total_medium_shirts = total_large_shirts = total_bag_packs = 0
+        for i in range(n):
+            for j in range(m):
+                locker_code, bundle = matrix[i][j]
+                self.assertEqual(len(locker_code), 6)
+                self.assertTrue('*' in locker_code or '#' in locker_code)
+                total_tumblers += bundle.count('tumbler')
+                total_small_shirts += bundle.count('small shirt')
+                total_medium_shirts += bundle.count('medium shirt')
+                total_large_shirts += bundle.count('large shirt')
+                total_bag_packs += bundle.count('bag pack')
+
+        self.assertEqual(total_tumblers, 25)
+        self.assertEqual(total_small_shirts, 3)
+        self.assertEqual(total_medium_shirts, 10)
+        self.assertEqual(total_large_shirts, 5)
+        self.assertEqual(total_bag_packs, 20)
+
+        # Check that lockers at position N = 2, M = 3 and N = 2, M = 1 are empty
+        self.assertEqual(matrix[2][3], ('', []))
+        self.assertEqual(matrix[2][1], ('', []))
+
 
 if __name__ == '__main__':
     unittest.main()
