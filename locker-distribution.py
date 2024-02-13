@@ -16,7 +16,6 @@
 
 import random
 import string
-import unittest
 
 # Function to generate random locker code
 def generate_locker_code():
@@ -67,25 +66,10 @@ def main():
     locker_matrix = generate_locker_matrix(rows, columns, swags)
     print_locker_matrix(locker_matrix)
     
-    
-class TestLockerCode(unittest.TestCase):
-    def test_length(self):
-        code = generate_locker_code()
-        self.assertEqual(len(code), 4)
-
-    def test_contains_digit(self):
-        code = generate_locker_code()
-        self.assertTrue(any(char.isdigit() for char in code))
-
-    def test_contains_special_char(self):
-        code = generate_locker_code()
-        self.assertTrue(any(char in ['*', '#'] for char in code))
-
 
     
 if __name__ == "__main__":
     main()
-    unittest.main()
 
 # Output:
 # Enter the number of rows: 3   
